@@ -19,9 +19,18 @@ class App extends Component {
 
   render() {
     const { monsters, searchText } = this.state;
-    const filteredMonsters = monsters.filter((monster) =>
-      monster.name.toLowerCase().includes(searchText.toLowerCase())
-    );
+    var findByName = (monster, searchText) => {
+      return monster.name.toLowerCase().includes(searchText.toLowerCase());
+    };
+    var findByEmail = (monster, searchText) => {
+      return monster.email.toLowerCase().includes(searchText.toLowerCase());
+    };
+    function filterByNameOrEmail(monster) {
+      if (findByName(monster, searchText) || findByEmail(monster, searchText))
+        return true;
+    }
+
+    const filteredMonsters = monsters.filter(filterByNameOrEmail);
 
     return (
       <div className="App">
